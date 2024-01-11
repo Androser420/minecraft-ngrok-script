@@ -54,7 +54,7 @@ send_ngrok_ip_to_discord() {
 LOG_FILE="$SERVER_FILES_DIR/logs/latest.log"
 
 check_crash_report() {
-    if grep -q -i "Failed to initialize server" "$LOG_FILE"; then
+    if grep -q -i "crash" "$LOG_FILE"; then
         echo "fail"
     else
         echo "success"
