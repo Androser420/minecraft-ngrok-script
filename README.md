@@ -5,3 +5,5 @@ Required packages:
 - jq
 - tmux
 - curl
+
+Only Linux is supported for now (maybe MacOS too idk)
