@@ -105,7 +105,7 @@ while true; do
         elif [ "$result" = "success" ]; then
             echo "Minecraft server shut down normally."
             curl -H "Content-Type: application/json" -X POST -d "$(jq -n --arg content $'## :red_circle: Server shut down. :red_circle:' '{"content":$content}')" $DISCORD_WEBHOOK_URL
-            tmux send-keys -t facility_of_miners "exit" C-m
+            tmux send-keys -t minecraft_tmux "exit" C-m
             pkill -f "ngrok"
             tmux kill-session -t ngrok_session && echo "Successfully stopped ngrok." || echo "Stopping ngrok failed."
         fi
