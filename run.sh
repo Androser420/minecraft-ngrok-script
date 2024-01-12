@@ -1,6 +1,6 @@
 #!/bin/bash
 
-clear ; echo $'WARNING: This script will only work if you have already set up your server and ngrok as this script\'s purpose is to make your life easier by automating processes like starting the server and ngrok in tmux sessions.\nThis script is not made for Windows and it won\'t work unless you run your server from WSL2, chroot, a VM or almost any native Linux distribution.\n\nAlso remember that when entering your server files\' location, you must provide a full path without backslashes and the slash at the end.\nIf you\'re willing to modify the given values, the configuration file is stored within your home directory. ($HOME/script.conf)\n\nTo stop the server including this script and ngrok, all you have to do send a /stop minecraft command and you\'re done!\n\nEnjoy!\n - Androser\n'
+clear ; echo $'WARNING: This script will only work if you have already set up your server and ngrok as this script\'s purpose is to make your life easier by automating processes like starting the server and ngrok in tmux sessions.\nThis script is not made for Windows and it won\'t work unless you run your server from WSL2, chroot, a VM or almost any native Linux distribution.\n\nAlso remember that when entering your server files\' location, you must provide a full path without backslashes.\nIf you\'re willing to modify the given values, the configuration file is stored within this script\'s directory.\n\nTo stop the server including this script and ngrok, all you have to do send a /stop minecraft command and you\'re done!\n\nEnjoy!\n - Androser\n'
 
 # Function to prompt for information and save it to the configuration file
 prompt_and_save_config() {
@@ -22,17 +22,17 @@ prompt_and_save_config() {
     fi
 
     # Save configuration to the file
-    echo "DISCORD_WEBHOOK_URL='$DISCORD_WEBHOOK_URL'" > "$HOME/script.conf"
-    echo "SERVER_FILES_DIR='$SERVER_FILES_DIR'" >> "$HOME/script.conf"
-    echo "START_SCRIPT_NAME='$START_SCRIPT_NAME'" >> "$HOME/script.conf"
-    echo "JAR_FILE_NAME='$JAR_FILE_NAME'" >> "$HOME/script.conf"
-    echo "ROLE_PING='$ROLE_PING'" >> "$HOME/script.conf"
+    echo "DISCORD_WEBHOOK_URL='$DISCORD_WEBHOOK_URL'" > "./script.conf"
+    echo "SERVER_FILES_DIR='$SERVER_FILES_DIR'" >> "./script.conf"
+    echo "START_SCRIPT_NAME='$START_SCRIPT_NAME'" >> "./script.conf"
+    echo "JAR_FILE_NAME='$JAR_FILE_NAME'" >> "./script.conf"
+    echo "ROLE_PING='$ROLE_PING'" >> "./script.conf"
 }
 
 # Check if the configuration file exists
-if [ -f "$HOME/script.conf" ]; then
+if [ -f "./script.conf" ]; then
     # Read configuration from the file
-    source "$HOME/script.conf"
+    source "./script.conf"
 else
     # If the file doesn't exist, create it by prompting for information
     prompt_and_save_config
@@ -54,7 +54,9 @@ send_ngrok_ip_to_discord() {
 LOG_FILE="$SERVER_FILES_DIR/logs/latest.log"
 
 check_crash_report() {
-    if grep -q -i "crash" "$LOG_FILE"; then
+    if grep -q -i "Preparing crash report" "$LOG_FILE"; then
+        echo "fail"
+    elif grep -q -i "Failed to initialize server" "$LOG_FILE"; then
         echo "fail"
     else
         echo "success"
