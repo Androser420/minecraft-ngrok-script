@@ -6,4 +6,4 @@ Required packages:
 - tmux
 - curl
 
-Only Linux is supported for now (maybe MacOS too idk)
+Only Linux is supported for now (maybe MacOS and WSL too, not tested)
