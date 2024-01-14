@@ -7,6 +7,7 @@ Packages:
 - tmux
 - curl
 - ngrok
+
 Things that need to be set up and configured:
 - ngrok
 - your server startup shell file
