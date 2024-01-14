@@ -2,6 +2,9 @@
 
 clear ; echo $'WARNING: This script will only work if you have already set up your server and ngrok as this script\'s purpose is to make your life easier by automating processes like starting the server and ngrok in tmux sessions.\nThis script is not made for Windows and it won\'t work unless you run your server from WSL2, chroot, a VM or almost any native Linux distribution.\n\nAlso remember that when entering your server files\' location, you must provide a full path without backslashes.\nIf you\'re willing to modify the given values, the configuration file is stored within this script\'s directory.\n\nTo stop the server including this script and ngrok, all you have to do send a /stop minecraft command and you\'re done!\n\nEnjoy!\n - Androser\n'
 
+# Get the directory where the script is located
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 # Function to prompt for information and save it to the configuration file
 prompt_and_save_config() {
     read -p "Enter Discord webhook URL: " DISCORD_WEBHOOK_URL
@@ -22,17 +25,17 @@ prompt_and_save_config() {
     fi
 
     # Save configuration to the file
-    echo "DISCORD_WEBHOOK_URL='$DISCORD_WEBHOOK_URL'" > "./script.conf"
-    echo "SERVER_FILES_DIR='$SERVER_FILES_DIR'" >> "./script.conf"
-    echo "START_SCRIPT_NAME='$START_SCRIPT_NAME'" >> "./script.conf"
-    echo "JAR_FILE_NAME='$JAR_FILE_NAME'" >> "./script.conf"
-    echo "ROLE_PING='$ROLE_PING'" >> "./script.conf"
+    echo "DISCORD_WEBHOOK_URL='$DISCORD_WEBHOOK_URL'" > "$SCRIPT_DIR/script.conf"
+    echo "SERVER_FILES_DIR='$SERVER_FILES_DIR'" >> "$SCRIPT_DIR/script.conf"
+    echo "START_SCRIPT_NAME='$START_SCRIPT_NAME'" >> "$SCRIPT_DIR/script.conf"
+    echo "JAR_FILE_NAME='$JAR_FILE_NAME'" >> "$SCRIPT_DIR/script.conf"
+    echo "ROLE_PING='$ROLE_PING'" >> "$SCRIPT_DIR/script.conf"
 }
 
 # Check if the configuration file exists
-if [ -f "./script.conf" ]; then
+if [ -f "$SCRIPT_DIR/script.conf" ]; then
     # Read configuration from the file
-    source "./script.conf"
+    source "$SCRIPT_DIR/script.conf"
 else
     # If the file doesn't exist, create it by prompting for information
     prompt_and_save_config
