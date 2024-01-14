@@ -12,7 +12,8 @@ Things that need to be set up and configured:
 - ngrok
 - your server startup shell file
 
-Only Linux is supported for now (maybe MacOS, not tested)
+
+Only Linux is supported for now (maybe MacOS too, not tested)
 
 # Tips for WSL2
 - if you run into the "./run.sh: cannot execute: required file not found" error, install dos2unix and convert both of the scripts.
